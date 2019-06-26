@@ -1,0 +1,221 @@
+%!TEX program = xelatex
+
+\documentclass[12pt,a4paper]{article}
+\usepackage{xeCJK}
+\usepackage{amsmath}
+\setmainfont{Times New Roman}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{graphicx, subfig}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{setspace}%使用间距宏包
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+    \newcommand{\dd}{\mathrm{d}}
+\usepackage{tcolorbox}
+    \tcbuselibrary{xparse}
+        \DeclareTotalTCBox{\verbbox}{ O{green} v !O{} }
+            {fontupper=\ttfamily,nobeforeafter,tcbox raise base,
+             arc=0pt,outer arc=0pt,top=0pt,bottom=0pt,left=0mm,
+             right=0mm,leftrule=0pt,rightrule=0pt,toprule=0.3mm,
+             bottomrule=0.3mm,boxsep=0.5mm,bottomrule=0.3mm,boxsep=0.5mm,
+             colback=#1!10!white,colframe=#1!50!black,#3}{#2}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+        basicstyle=\scriptsize,
+        upquote=true,
+        aboveskip={1.5\baselineskip},
+        columns=fixed,
+        showstringspaces=false,
+        extendedchars=true,
+        breaklines=true,
+        prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        frame=single,
+        showtabs=false,
+        showspaces=false,
+        showstringspaces=false,
+        identifierstyle=\ttfamily,
+        keywordstyle=\color[rgb]{0,0,1},
+        commentstyle=\color[rgb]{0.133,0.545,0.133},
+        stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+\begin{document} 
+\title{homework12}
+	\author{11611118 郭思源}  
+\begin{spacing}{1.5}%%行间距变为double-space
+
+\section{Problem 1}
+
+Problem: Maximize $f(x_1,x_2)$.
+\[
+f(x_1,x_2) = x_1(P_1-a_1x_1-b_1x_2)+x_2(P_2-a_2x_1-b_2x_2)-F-C_1x_1-C_2x_2
+\]
+1. Slove the problem by calculus.
+\begin{equation*}
+	\begin{aligned}
+		\frac{\partial f(x_1,x_2)}{\partial x_1} 
+        &= P_1-C_1-2a_1x_1-a_2x_2-b_1x_2 \\ 
+        \frac{\partial f(x_1,x_2)}{\partial x_2} 
+        &= P_2-C_2-a_2x_1-b_1x_1-2b_2x_2 \\ 
+        \frac{\partial^2 f(x_1,x_2)}{\partial x_1^2} 
+        &= -2a_1 \\ 
+        \frac{\partial^2 f(x_1,x_2)}{\partial x_1 \partial x_2} 
+        &= -a_2-b_1 \\ 
+        \frac{\partial^2 f(x_1,x_2)}{\partial x_2^2} 
+        &= -2b_2 \\ 
+	\end{aligned}
+\end{equation*}
+
+There should be :
+\begin{equation*}
+	\begin{aligned}
+		\frac{\partial f(x_1,x_2)}{\partial x_1} &= 0 \\
+        \frac{\partial f(x_1,x_2)}{\partial x_2} &= 0 \\
+        \frac{\partial^2 f(x_1,x_2)}{\partial x_1 \partial x_2} &< 0 \\
+        (\frac{\partial^2 f(x_1,x_2)}{\partial x_1 \partial x_2})^2 &
+        - \frac{\partial^2 f(x_1,x_2)}{\partial x_1^2} \times
+        \frac{\partial^2 f(x_1,x_2)}{\partial x_2^2} < 0 
+	\end{aligned}
+\end{equation*}
+
+\newpage
+So :
+\begin{equation*}
+    \begin{aligned}
+        x_2 &= 
+        \frac{2a_1(P_2-C_2)-(a_2+b_1)(P_1-C_1)}{4a_1b_2-(a_2+b_1)^2}  \\
+        x_1 &= \frac{P_1-C_1}{2a_1} - \frac{a_2+b_1}{2a_1} \times
+        \frac{2a_1(P_2-C_2)-(a_2+b_1)(P_1-C_1)}{4a_1b_2-(a_2+b_1)^2}  \\
+        & \qquad \qquad a_2 + b_1 > 0 \\
+        & \qquad \qquad (a_2 + b_1)^2-4a_1b_2 < 0 \\
+    \end{aligned}
+\end{equation*}
+2. Slove the problem by via MATLAB.
+
+\begin{lstlisting}[language=matlab]
+a1 = 1; a2 = 2; b1 = 1; b2 = 3;
+c1 = 1; c2 = 2; P1 = 5; P2 = 3; F = 3;
+f = @(x)(-1*(x(1)*(P1-a1*x(1)-b1*x(2)) + ...
+          x(2)*(P2-a2*x(1)-b2*x(2)) ...
+          - F - c1*x(1) - c2*x(2)));
+opts = optimoptions(@fmincon,'Algorithm','interior-point');
+% problem = createOptimProblem('fmincon', ...
+%     'x0',[2;3],'objective',sixmin, ...
+%     'Aineq',A,'bineq',b,'options',opts);
+problem = createOptimProblem('fmincon','x0',[0;0],'objective',f,'options',opts);
+[x,fval,eflag,output] = fmincon(problem)
+\end{lstlisting}
+
+\newpage
+\section{Problem 2}
+
+Problem: Minimize $f(x_1,x_2)$, such that $x_1+2x_2=12$.
+\[
+f(x_1,x_2) = \frac{23}{x_1} + x_1 + \frac{30}{x_2} - 6x_2
+\]
+1. Please present a short review of the Lagrange Multiplier Method. \\\\
+Lagrange multiplication method is an optimization algorithm, which is mainly used to solve the optimization problem under the condition of constraint. The basic idea is to transform the constraint optimization problem with $N$ variables and $K$ constraints into unconstrained optimization problem containing $(N+K)$ variables by introducing Lagrange multiplication. \\\\
+The standard form of constrained optimization problem can be expressed in the following formula:
+\begin{equation}
+    \begin{aligned}
+        min \quad & f(x)\\
+        s.t.: \quad & g_i(x) \leq 0, i=1,...,m\\
+              \quad & h_j(x) = 0, j=1,...,t\\
+    \end{aligned}
+\end{equation}
+The basic idea of Lagrangian multiplication method is to transform the optimization problem with constraints in formula (1) into an unconstrained optimization problem. Its concrete implementation is as follows:
+\begin{equation}
+    \begin{aligned}
+        L(x;\alpha,\beta) = f(x) + \sum_{i=1}^m \alpha_i g_i(x) + \sum_{j=1}^t \beta_j h_j(x)
+    \end{aligned}
+\end{equation}
+Where $L$ is the Lagrange function, $\alpha$, $\beta$ is the Lagrange boarding, and satisfies ${\alpha}_i \geq 0$. $x$ is the primal variable, $\alpha$ and $\beta$ are the dual variables. 
+
+\newpage
+\noindent For problem:
+\begin{equation*}
+    \begin{aligned}
+        min \quad & f(x)\\
+        s.t.: \quad & g(x) = 0
+    \end{aligned}
+\end{equation*}
+
+\noindent From a geometric point of view, the goal of this problem is to look for points on the dimensional curvature surface determined by the equation that can minimize the objective function. \\\\
+It is not difficult for us to draw the following conclusion: \\
+1. For any point on the constrained surface, the gradient of the point $\nabla g(x)$ is orthogonal to the constraint surface \\
+2. For the best solution $x^*$, the gradient of the objective function in this point 
+$\nabla f(x^*)$ is also orthogonal to the constrained surface \\\\
+So that, in the most advantages, the gradient and the inevitable direction are the same or the opposite. That is: Existing $\lambda\not=0$, such that: 
+\[
+    \nabla f(x^*) + \lambda \nabla g(x^*) = 0
+\]
+
+\noindent 2. Slove the problem by the Lagrange Multiplier Method (LMM).
+
+\begin{equation*}
+    \begin{aligned}
+        \nabla f(\vec{x}) &= (1-\frac{23}{x_1^2},-6-\frac{30}{x_2^2}) \\
+        g(\vec{x}) &= x_1 + 2x_2 - 12 \\
+        \nabla g(\vec{x}) &= (1,2)
+    \end{aligned}
+\end{equation*}
+for $\nabla f(x^*) + \lambda \nabla g(x^*) = 0$:
+\[
+\vec{x} = (2.229, 4.885),\quad f(\vec{x}) = -10.62
+\]
+
+\newpage
+\section{Problem 3}
+$A\ Least\ Squares\ Plane$ --- Given the four points $(x_k,y_k,z_k)$
+\[
+(0,0,0),\quad (0,1,1),\quad (1,1,1),\quad (1,0,-1)
+\]
+Find the values of A,B and C to minimize the sum of squared errors
+\[
+\sum_{k=1}^4 (Ax_k + By_k + C - z_k)^2
+\]
+If the points must line in the plane 
+\[
+z=Ax+By+C
+\]
+\begin{equation*}
+    \begin{aligned}
+        W &= \sum_{k=1}^4 (Ax_k + By_k + C - z_k)^2 \\
+          &= 2A^2+2B^2+4C^2+2AB+4AC+4BC-4B-2C+3 \\
+        \frac{\partial W}{\partial A}
+          &= 4A+2B+4C = 0 \\
+        \frac{\partial W}{\partial B}
+          &= 4B+2A+4C-4 = 0 \\
+        \frac{\partial W}{\partial C}
+          &= 8C+4A+4B-2 = 0 \\
+    \end{aligned}
+\end{equation*} 
+Get $A=-0.5,B=1.5,C=-0.25$ \\
+Then we have:
+\[
+\mathbf{H(\vec{x})} = 
+\begin{bmatrix} 
+4 & 2 & 4 \\
+2 & 4 & 4 \\
+4 & 4 & 8 
+\end{bmatrix},
+\mathbf{det(H(\vec{x}))} > 0
+\]
+So we have the $min$ W.
+
+
+
+\end{spacing}
+
+\end{document}

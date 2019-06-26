@@ -1,0 +1,149 @@
+%!TEX program = xelatex
+
+\documentclass[12pt,a4paper]{article}
+\usepackage{xeCJK}
+\usepackage{amsmath}
+\setmainfont{Times New Roman}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{graphicx, subfig}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{setspace}%使用间距宏包
+\usepackage{mathtools}
+\usepackage{amsfonts}
+
+\begin{document} 
+\title{homework6}
+	\author{11611118 郭思源}  
+
+
+
+\begin{spacing}{1.5}%%行间距变为double-space
+
+\section{Question 1}
+
+Prove that a discrete state space stochastic process which satisfies Markovian property has
+\[
+P^{(n+m)} = P^{(n)}P^{(m)}
+\]
+and thus
+\[
+P^{(n)} = P^{(n-1)}P = P\times\cdots\times P = P^n,
+\]
+where $P^{(n)}$ denotes the matrix of $n$-step transition probabilities and $P^n$ denotes the $n$th power of the matrix $P$.
+$\\\\$
+\subsection{The probability : }
+Let the $n$-step transition probabilities be denoted by 
+$p_{ij}^{(n)}$: the probability that a process in state $i$ will be in state $j$ after $n$ additional transitions. That is,
+\[
+p_{ij}^{(n)} 
+= 
+P\{X_{n+m}=j|X_m=i\} \ n \geq 0,\ i,\ j \geq 0, 
+\]
+This probability does not depend on $m$, either!
+\[p_{ij}^{(1)} = p_{ij}\]
+
+\newpage
+\subsection{Proof : }
+\begin{equation*}
+\begin{aligned}
+p_{ij}^{(n+m)} 
+	&= P\{X_{n+m}=j|X_0=i\} \\
+	&= \displaystyle \sum_{k=0}^{\infty} 
+		P\{X_{n+m}=j,X_{n}=k|X_0=i\} \\
+	&= \displaystyle \sum_{k=0}^{\infty} 
+		P\{X_{n+m}=j|X_{n}=k,X_0=i\} P\{X_{n}=k|X_{0}=i\} \\
+	&= \displaystyle \sum_{k=0}^{\infty} 
+		P\{X_{n+m}=j|X_{n}=k\} P\{X_{n}=k|X_{0}=i\} \\
+	&= \displaystyle \sum_{k=0}^{\infty}
+		p_{ik}^{(n)}p_{kj}^{(m)} .
+\end{aligned}
+\end{equation*}
+$\\$In matrix form, we have
+\[P^{(n+m)} = P^{(n)}P^{(m)}\]
+and thus
+\[P^{(n)} = P^{(n-1)}P^{}=P\times \dots \times P=P^n,\]
+where $P^{(n)}$ denotes the matrix of $n$-step transition probabilities and $P^{(n)}$ denote the $n$th power of the matrix $P$.
+
+\begin{center}
+$p_{ij}^{(n+m)} 
+= \displaystyle \sum_{k=0}^{\infty}p_{ik}^{(n)}p_{kj}^{(m)} 
+\quad $ for all $ n,m \geq 0 , \ $all $ i,j \geq 0.$
+\end{center}
+In that, we have assumed that, without loss any generality, the state space $E$ is \{0, 1, 2, · · · \}. If we do not assume this, and let the state space be $E$, then the equation should be written as
+\begin{center}
+$p_{ij}^{(n+m)} 
+= \displaystyle \sum_{k\in E}^{}p_{ik}^{(n)}p_{kj}^{(m)} 
+\quad $ for all $ n,m \geq 0 , \ $all $ i,j \in E.$
+\end{center}
+
+
+\newpage
+\section{Question 2}
+
+Consider adding a pizza delivery service as an alternative to the dining halls. \\Table~\ref{T:hw-6-1} gives the transition percentages based on a student survey. Determine the long-term percentages eating at each place. Try several different starting values. Is equilibrium achieved in each case? If so, what is the final distribution of students in each case?
+
+\begin{table}[htb]
+\centering
+    \begin{tabular}{ccccc}  
+    &                                         
+    &  \multicolumn{1}{c}{}                                                 
+    &  \multicolumn{1}{c}{Next state}                                    
+    &  \multicolumn{1}{c}{}                                                  
+
+    \\ \cline{2-5} \multicolumn{1}{c|}{}        
+    &  \multicolumn{1}{c|}{}                   
+    &  \multicolumn{1}{c}
+	   {\begin{tabular}[c]{@{}c@{}}Grease\\Dining Hall\end{tabular}} 
+	&  \multicolumn{1}{c}
+	   {\begin{tabular}[c]{@{}c@{}}Sweet\\ Dining Hall\end{tabular}} 
+	&  \multicolumn{1}{c|}
+	   {\begin{tabular}[c]{@{}c@{}}Pizza\\ delivery\end{tabular}} 
+	
+	\\ \cline{2-5} \multicolumn{1}{c|}{}              
+    &  \multicolumn{1}{c|}{Grease Dining Hall} 
+    &  0.25 
+    &  0.25              
+    &  \multicolumn{1}{c|}{0.50}
+    
+    \\ \multicolumn{1}{c|}{Present state} 
+    &  \multicolumn{1}{c|}{Sweet Dining Hall}  
+    &  0.10
+    &  0.30         
+    &  \multicolumn{1}{c|}{0.60}                                           
+    
+    \\ \multicolumn{1}{c|}{}              
+    &  \multicolumn{1}{c|}{Pizza delivery}    
+    &  0.05                                 
+    &  0.15                                   
+    &  \multicolumn{1}{c|}{0.80}
+    
+    \\ \cline{2-5}  
+   	\end{tabular}
+\caption{Survey of dining at College USA}\label{T:hw-6-1}
+\end{table}
+
+\begin{center}
+\[ {p}= 
+\begin{bmatrix} 
+0.25 & 0.25 & 0.50
+\\[8pt] 
+0.10 & 0.30 & 0.60
+\\[8pt] 
+0.05 & 0.15 & 0.80
+\end{bmatrix} \] 
+\end{center}
+from $qp = q$, we have :
+\begin{center}
+\[ {q}= 
+\begin{bmatrix} 
+0.0741 & 0.1852 & 0.7407 
+\end{bmatrix} \] 
+\end{center}
+So that we can see for every case, assume that the total number of customers are $n$, then in the equilibrium, Grease Dining Hall has $0.0741n$ customers, Sweet Dining Hall has $0.1852n$ customers, Pizza delivery has $0.7407n$ customers.
+
+\end{spacing}
+
+\end{document}

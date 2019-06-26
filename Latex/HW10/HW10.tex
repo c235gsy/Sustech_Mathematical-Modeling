@@ -1,0 +1,63 @@
+%!TEX program = xelatex
+
+\documentclass[12pt,a4paper]{article}
+\usepackage{xeCJK}
+\usepackage{amsmath}
+%\setmainfont{Times New Roman}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{graphicx, subfig}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{setspace}%使用间距宏包
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amssymb,amsmath}
+\newcommand{\dd}{\mathrm{d}}
+\usepackage{enumitem}
+
+\begin{document} 
+\title{homework10}
+	\author{11611118 郭思源}  
+
+\begin{spacing}{1.2}  
+\section{Homework 10}
+\textit{Controlling a population}---The fish and game department in a certain state is planning to issue hunting permits to control the deer population(one deer per permit). It is known that if the deer population falls below a certain level m, the deer will become extinct. It is also known that if the deer population rises above the carrying capacity $M$, the population will decrease back to $M$ through disease and malnutrition.
+\begin{enumerate}[label={\textbf{\alph*.}}]
+    \item Discuss the reasonableness of the following model for the growth rate of the deer population as a function of time:
+    \[
+        \frac{\dd P}{\dd t} = rP(M-P)(P-m)
+    \]
+    where $P$ is the population of the deer and $r$ is a positive constant of proportionality. Include a phase line.
+    \\\\
+    There should be $P >= 0$.  \\\\
+    While the $P = m$, the $\frac{dP}{dt} = 0$, the $P$ will stay at value $m$.  \\\\
+    While the $P < m$, the $\frac{dP}{dt} <= 0$, the $P$ will tend to equal 0 or stay at value $m$. As we known, if the deer population falls below a certain level $m$, the deer will become extinct. \\\\
+    While the $m < P < M$, the $\frac{dP}{dt} > 0$ and as the $P$ increase, the $\frac{dP}{dt}$ will firstly increase and match the maximum and then decrease, which also matches the rule of deer population development. \\\\
+    While the $P = M$, the $\frac{dP}{dt} = 0$, the $P$ will stay at value $M$, which also matches the rule of deer population development.  \\\\
+    While the $P > M$, the $\frac{dP}{dt} <= 0$, the $P$ will decrease until $P=M$, and then $\frac{dP}{dt} = 0$ and $P$ will not change, which also matches the rule of deer population development. 
+    \newpage
+
+    \item Explain how this model differs from the logistic model $\dd P/\dd t=rP(M-P)$. Is it better or worse than the logistic model?
+    \\\\
+    In the logistic model, if $P <= m$, the population will grow, which means that the rule if the deer population falls below a certain level $m$, the deer will become extinct was ignored in this model. But in our new model, we can simulate the extinct behavior of beer population, so our new model is much better than the logistic model, since it could remain people do not to hunt too many deer which will destroy the deer population.\\\\
+
+    \item Show that if $P>M$ for all $t$, then $\lim_{t\to\infty}P(t)=M$. 
+	\\\\
+	If $P > M$, the $\frac{dP}{dt} < 0$, and if $P = M$, the $\frac{dP}{dt} = 0$, we also known that $P$ is continuous, which means that if $P > M$ at all $t$, the $P$ will decrease until $P(t)=M$ and then become stable, so we can get that $\lim_{t\to\infty}P(t)=M$.\\\\
+
+    \item Discuss the solutions to the differential equation. What are the equilibrium points of the model? Explain the dependence of the steady-state value of $P$ on the initial values of $P$. About how many permits should be issued?
+    \\\\
+    Equilibrium points : $P=0$, $P=m$ and $P=M$\\
+    If $P_0<m$, $P_{steady-state}=0$ \\
+    If $P_0=m$, $P_{steady-state}=m$ \\
+    If $P_0>m$, $P_{steady-state}=M$ \\
+    The population of beer should be as small as possible but we cannot let $P<m$, so the best solution is to control to $P$ to $P=m$. The number of permission should be $(P_{current}-m)$.
+    
+
+
+
+\end{enumerate}
+\end{spacing}
+\end{document}

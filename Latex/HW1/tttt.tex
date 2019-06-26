@@ -1,0 +1,42 @@
+
+%!TEX program = xelatex
+
+\documentclass[12pt,a4paper]{article}
+\usepackage{xeCJK}
+\usepackage[fleqn]{amsmath}
+\setCJKmainfont{STSongti-SC-Regular}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{graphicx, subfig}
+\usepackage{float}
+\begin{document} 
+
+\begin{equation}
+\begin{aligned}
+	T' &= \Lambda - \mu_{T}T - \kappa T_{A}T\\\\
+	T'_{L} &= \kappa T_{A}T - (\mu_{L} + \alpha)T_{L}\\\\
+	T'_{A} &= \alpha T_{L} - (\mu_{A} + \rho)T_{A}\\\\
+	T'_{M} &= \rho T_{A} - \beta T_{M} 
+	\Bigl( 1 - \frac{T_{M}}{T_{M_{\max}}} \Bigr) - \kappa T_{A}T\\\\
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+T' &= \Lambda-\mu_{T}T-\kappa \Bigl( \frac{T_{A}}{1+\alpha_{1}T_{A}} \Bigr) T$\\\\
+T'_{L} &= \kappa\Bigl(\frac{T_{A}}{1+\alpha_{1}T_{A}} \Bigr)T-(\mu_{L}+\alpha) T_{L}\\\\
+T'_{A} &= \alpha T_{L} - (\mu_{A} + \rho$)$T_{A}$\\\\
+T'_{M} &= \rho T_{A}-\beta T_{M} \Bigl( 1 - \frac{T_{M}}{T_{M_{\max}}} \Bigr)- \mu T_{M}\\\\
+R_{0} &= \frac{\alpha \kappa \frac{T_{A}}{1 + \alpha_{1} T_{A}} \Lambda}
+{\mu_{T} (\mu_{L} + \alpha) (\mu_{A} + \rho)}
+\end{aligned}
+\end{equation}
+
+	%$T'_{ }$ &= $\Lambda$ - $\mu_{T}T$ - $\kappa T_{A}T$\\
+	%$T'_{L}$ &= $\kappa T_{A}T$ - ($\mu_{L} + \alpha$)$T_{L}$\\
+	%$T'_{A}$ &= $\alpha T_{L}$ - ($\mu_{A} + \rho$)$T_{A}$\\
+	%$T'_{M}$ &= $\rho T_{A}$ - $\beta T_{M} 
+	%\Bigl( 1 - \frac{T_{M}}{T_{M_{\max}}} \Bigr) $ - $\kappa T_{A}T$\\
+	
+
+\end{document}
